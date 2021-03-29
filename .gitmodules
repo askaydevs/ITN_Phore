@@ -1,0 +1,12 @@
+[submodule "MASS"]
+	path = MASS
+	url = https://github.com/microsoft/MASS.git
+[submodule "unilm"]
+	path = unilm
+	url = https://github.com/microsoft/unilm.git
+[submodule "fairseq"]
+	path = fairseq
+	url = https://github.com/pytorch/fairseq.git
+[submodule "mosesdecoder"]
+	path = mosesdecoder
+	url = https://github.com/moses-smt/mosesdecoder.git
