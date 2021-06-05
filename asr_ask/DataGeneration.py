@@ -1,9 +1,9 @@
 import codecs
 import soundfile as sf
-from nemo.collections.tts.models.base import SpectrogramGenerator, Vocoder, TextToWaveform
+from nemo.collections.tts.models.base import SpectrogramGenerator, Vocoder
 import os
 
-class dataloader():
+class datagenerator():
     
     def __init__(self, root, train, target, audio):
         self.dataset = root
