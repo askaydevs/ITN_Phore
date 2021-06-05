@@ -6,7 +6,7 @@ The 1st step towards accomplishing the task is to train the model for speech-to-
 
 **SCRIPT DESCRIPTION**
 
-1. _[DataGenerator.py](DataGenerator.py)_
+1. _[DataGenerator.py](https://github.com/askaydevs/ITN_Phore/blob/asr/asr_ask/DataGeneration.py)_
 
 The datagenerator class contains _text_process function_ which extracts the grammatically incorrect and correct sentences and saves them in separate files whose paths are declared as train.train and target.train respectively in the main function. 
 The _audio_generator function_ reads the file that contains the grammatically incorrect sentences created from the previous function and converts it into an audio file. The audio files are saved in audio_train path declared in the main function.
