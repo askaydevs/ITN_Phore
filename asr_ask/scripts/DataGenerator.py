@@ -1,3 +1,4 @@
+#importing packages
 import codecs
 import soundfile as sf
 from nemo.collections.tts.models.base import SpectrogramGenerator, Vocoder
@@ -5,15 +6,20 @@ import os
 
 class datagenerator():
     
+    #initialization of file locations and pre-trained model for audio generation
     def __init__(self, root, train, target, audio):
         self.dataset = root
         self.train = train
         self.target = target
         self.audio = audio
         self.count = 1
+
+        #text-to-speech can be done by converting text to spectrogram and then to audio.
+        #tacoton-2 model is used to generate spectrogram and hifigan is used for audio file generation from spectrogram
         self.spectro = SpectrogramGenerator.from_pretrained('tts_en_tacotron2')
         self.vocoder = Vocoder.from_pretrained('tts_hifigan').eval().cuda()
 
+    #function obtains grammatically incorrect and correct sentences
     def text_process(self):
         with codecs.open(self.dataset, 'r', encoding='utf8') as f, codecs.open(self.train, 'w', encoding='utf8') as ftt, codecs.open(self.target, 'w', encoding='utf8') as ft:
             for line in f:
@@ -25,9 +31,11 @@ class datagenerator():
                 if len(cols) > 5:
                     corr = cols[5]
 
-                ft.write(orig + "\n")
-                ftt.write(corr + "\n")
+                #orig is the original grammatically incorrect sentence and corr is the grammtically correct sentence
+                ftt.write(orig + "\n")
+                ft.write(corr + "\n")
     
+    #function generates audio files from grammatically incorrect sentences
     def audio_process(self):
         with codecs.open(self.train, 'r', encoding='utf8') as f:
             for line in f:
@@ -44,11 +52,17 @@ class datagenerator():
 
 
 if __name__ == '__main__':
-    dataset_root = '/path/lang-8.train'
-    train_train = '/path/train.train'
-    target_train = '/path/target.train'
-    audio_train = '/path/audio'
 
-    obj = dataloader(dataset_root, train_train, target_train, audio_train)
+    #path to lang-8 dataset, grammatically incorrect sentences, correct sentences and audio files respectively
+    #Similarly, paths to test data can be created
+    dataset_root = '/path/train/transcript/testing_lang-8.train'
+    train_train = '/path/train/transcript/train.train'
+    target_train = 'path/train/transcript/target.train'
+    audio_train = 'path/train/audio'
+
+    #declaring object of class datagenerator
+    obj = datagenerator(dataset_root, train_train, target_train, audio_train)
+    #function used to obtain grammatically incorrect and correct sentences from raw data
     obj.text_process()
+    #function used to convert incorrect sentences to audio format for training ASR model
     obj.audio_process()
