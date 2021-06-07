@@ -13,11 +13,11 @@ Dataset used for ASR training - [Lang-8 English](https://sites.google.com/site/n
 
 1. _[Data_Set_Generator.py](https://github.com/askaydevs/ITN_Phore/blob/asr/asr_ask/scripts/DataGenerator.py)_
 
-  * _init_ method---> initializes paths to lang-8 dataset, grammatically incorrect sentences, correct sentences, audio files, json file respectively
+    * _init_ method---> initializes paths to lang-8 dataset, grammatically incorrect sentences, correct sentences, audio files, json file respectively
  
-  * _text_process_ method---> obtains grammatically incorrect and correct sentences
+    * _text_process_ method---> obtains grammatically incorrect and correct sentences
 
-  * _audio_generator_ method ---> generates audio.wav files using grammatically incorrect sentences
-    * _Tactotron-2_ pre-trained model --> generates spectrogram from text input
-    * _higigan_ pre-trained model --> generates .wav files from spectrogram
-    * stores data in suitable format(1) for ASR model training
+    * _audio_generator_ method ---> generates audio.wav files using grammatically incorrect sentences
+      * _Tactotron-2_ pre-trained model --> generates spectrogram from text input
+      * _higigan_ pre-trained model --> generates .wav files from spectrogram
+      * stores data in suitable format(1) for ASR model training
