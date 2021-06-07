@@ -3,15 +3,18 @@ import codecs
 import soundfile as sf
 from nemo.collections.tts.models.base import SpectrogramGenerator, Vocoder
 import os
+import json
+import librosa
 
 class datagenerator():
     
     #initialization of file locations and pre-trained model for audio generation
-    def __init__(self, root, train, target, audio):
+    def __init__(self, root, train, target, audio, manifest):
         self.dataset = root
         self.train = train
         self.target = target
         self.audio = audio
+        self.manifest_path = manifest
         self.count = 1
 
         #text-to-speech can be done by converting text to spectrogram and then to audio.
@@ -37,16 +40,27 @@ class datagenerator():
     
     #function generates audio files from grammatically incorrect sentences
     def audio_process(self):
-        with codecs.open(self.train, 'r', encoding='utf8') as f:
-            for line in f:
+        with codecs.open(self.train, 'r', encoding='utf8') as fin, codecs.open(self.manifest_path, 'w') as fout:
+            for line in fin:
 
                 parsed = self.spectro.parse(line)
                 spectrogram = self.spectro.generate_spectrogram(tokens=parsed)
                 audio = self.vocoder.convert_spectrogram_to_audio(spec=spectrogram)[0]
                 
                 audio = audio.to('cpu').detach().numpy()
+                audio_path = os.path.join(self.audio, str("audio_spec2wav_sample_"+ str("{:04d}".format(self.count))+ ".wav"))
 
-                sf.write(os.path.join(self.audio, str("audio_spec2wav_sample_"+ str(self.count)+ ".wav")), audio, 22050)
+                sf.write(audio_path, audio, 22050)
+
+                duration = librosa.core.get_duration(filename=audio_path)
+
+                metadata = {
+                    "audio_filepath": audio_path,
+                    "duration": duration,
+                    "text": line
+                }
+                json.dump(metadata, fout)
+                fout.write('\n')
 
                 self.count+= 1
 
@@ -59,9 +73,10 @@ if __name__ == '__main__':
     train_train = '/path/train/transcript/train.train'
     target_train = 'path/train/transcript/target.train'
     audio_train = 'path/train/audio'
+    manifest = '/path/train/transcript/train_dataset.json'
 
     #declaring object of class datagenerator
-    obj = datagenerator(dataset_root, train_train, target_train, audio_train)
+    obj = datagenerator(dataset_root, train_train, target_train, audio_train, manifest)
     #function used to obtain grammatically incorrect and correct sentences from raw data
     obj.text_process()
     #function used to convert incorrect sentences to audio format for training ASR model
