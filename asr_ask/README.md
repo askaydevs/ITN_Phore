@@ -7,7 +7,7 @@ Dataset used for ASR training - [Lang-8 English](https://sites.google.com/site/n
 -Input ---> raw text from lang-8 english dataset
 
 -Output ---> json file with data stored in the format below
-  {"audio_filepath": "path/to/audio.wav", "duration": duration, "text": "sentence used to generate audio"} -- (1)
+{"audio_filepath": "path/to/audio.wav", "duration": duration, "text": "sentence used to generate audio"} -- (1)
 
 **SCRIPT DESCRIPTION**
 
