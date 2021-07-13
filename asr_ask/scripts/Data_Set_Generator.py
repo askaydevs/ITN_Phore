@@ -1,12 +1,9 @@
 #importing packages
 import codecs
 import soundfile as sf
-from torch._C import import_ir_module
 from nemo.collections.tts.models.base import SpectrogramGenerator, Vocoder
 import os
 from glob import glob
-import librosa
-import json
 import nemo.collections.asr as nemo_asr
 
 
@@ -84,7 +81,7 @@ if __name__ == '__main__':
     train_train = '/path/train/transcript/train.train'
     target_train = 'path/train/transcript/target.train'
     audio_train = 'path/train/audio'
-    transcribe = 'path/Transcribed/train/transcript.train'
+    transcribe = 'path/train/transcribed/transcribed.train'
 
     #declaring object of class datagenerator
     obj = datagenerator(dataset_root, train_train, target_train, audio_train, transcribe)
