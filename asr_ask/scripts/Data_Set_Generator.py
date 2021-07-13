@@ -21,9 +21,9 @@ class datagenerator():
 
         #text-to-speech can be done by converting text to spectrogram and then to audio.
         #tacoton-2 model is used to generate spectrogram and hifigan is used for audio file generation from spectrogram
-        self.spectro = SpectrogramGenerator.from_pretrained('tts_en_tacotron2') #for spectrogram generation
+        self.spectro = SpectrogramGenerator.from_pretrained('tts_en_tacotron2').eval().cuda() #for spectrogram generation
         self.vocoder = Vocoder.from_pretrained('tts_hifigan').eval().cuda() #for audio generation from spectrogram
-        self.citrinet = nemo_asr.models.EncDecCTCModelBPE.from_pretrained(model_name="stt_en_citrinet_1024") #asr pre-trained model
+        self.citrinet = nemo_asr.models.EncDecCTCModelBPE.from_pretrained(model_name="stt_en_citrinet_1024").eval().cuda() #asr pre-trained model
 
     #function obtains grammatically incorrect and correct sentences
     def text_process(self):
