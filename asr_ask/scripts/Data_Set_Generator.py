@@ -75,19 +75,23 @@ class datagenerator():
 
 if __name__ == '__main__':
 
-    #path to lang-8 dataset, grammatically incorrect sentences, correct sentences and audio files respectively
-    #Similarly, paths to test data can be created
-    dataset_root = '/path/train/transcript/testing_lang-8.train'
-    train_train = '/path/train/transcript/train.train'
-    target_train = 'path/train/transcript/target.train'
-    audio_train = 'path/train/audio'
-    transcribe = 'path/train/transcribed/transcribed.train'
+    files = ['train', 'test']
 
-    #declaring object of class datagenerator
-    obj = datagenerator(dataset_root, train_train, target_train, audio_train, transcribe)
-    #function used to obtain grammatically incorrect and correct sentences from raw data
-    obj.text_process()
-    #function used to convert incorrect sentences to audio format for training ASR model
-    obj.audio_process()
-    #function used to transcribe audio files into text
-    obj.speech_recognition()
+    for i in files:
+
+        #path to lang-8 dataset, grammatically incorrect sentences, correct sentences and audio files respectively
+        dataset_root = 'path'+ i+ '/transcript/sample_entries'
+        train = 'path'+ i+ '/transcript/train'
+        target = 'path'+ i+ '/transcript/target'
+        audio = 'path'+ i+ '/audio'
+        transcribe = 'path'+ i+  '/transcribed/transcribed'
+
+
+        #declaring object of class datagenerator
+        obj = datagenerator(dataset_root, train, target, audio, transcribe)
+        #function used to obtain grammatically incorrect and correct sentences from raw data
+        obj.text_process()
+        #function used to convert incorrect sentences to audio format for training ASR model
+        obj.audio_process()
+        #function used to transcribe audio files into text
+        obj.speech_recognition()
